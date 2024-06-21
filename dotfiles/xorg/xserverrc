@@ -1,0 +1,3 @@
+#!/bin/sh
+# vt1 -keeptty
+/usr/bin/X -nolisten tcp "$@"

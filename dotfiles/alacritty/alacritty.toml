@@ -1,0 +1,21 @@
+import = [
+  "~/rarch/dotfiles/alacritty/mocha.toml"
+]
+
+[window]
+opacity = 0.9
+
+[font]
+size = 8.0
+
+[font.normal]
+family = "DaddyTimeMono Nerd Font Mono"
+style = "Regular"
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = "@,│`|:\"' ()[]{}<>\t"
+
+[window.padding]
+x = 4
+y = 4

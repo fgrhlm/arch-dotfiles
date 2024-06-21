@@ -1,0 +1,30 @@
+#
+# ~/.bashrc
+
+# disable less history file
+export LESSHISTFILE=-
+
+# history
+export HISTIGNORE="ls *:cd *"
+export HISTSIZE=10000
+
+# git
+export GIT_EDITOR=nvim
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# aliases
+alias ls='ls -lSah --color=auto'
+alias duf='du -h --max-depth=1 | sort -h'
+alias tree='tree -Cha'
+alias grep='grep --color=auto'
+alias vim='nvim'
+
+# prompt
+PS1='[\A] (\u@\h) \w \$ '
+
+# wal
+if [ -d "~/.cache/wal" ]; then
+    cat ~/.cache/wal/sequences
+fi

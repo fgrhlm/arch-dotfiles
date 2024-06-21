@@ -1,0 +1,8 @@
+afdko
+lib32-lzo-debug
+mingw-w64-tools
+mingw-w64-tools-debug
+proton-ge-custom
+protontricks
+python-ufonormalizer
+python-vdf
