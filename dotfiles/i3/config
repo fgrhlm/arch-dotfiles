@@ -2,7 +2,8 @@ set $mod Mod4
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id picom --config $HOME/.config/picom.conf -b
-
+exec --no-startup-id bash $HOME/rarch/scripts/gen-pywal.sh
+exec --no-startup-id feh --bg-fill ~/Downloads/bg.jpg ~/Downloads/bg2.jpg
 font pango:DaddyTimeMono Nerd Font Mono 8
 
 gaps inner 4px
@@ -44,7 +45,9 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
-bindsym $mod+Shift+p exec --no-startup-id bash $HOME/.rarch-scripts/gen-pywal.sh
+bindsym $mod+Shift+p exec --no-startup-id bash $HOME/rarch/scripts/gen-pywal.sh
+bindsym $mod+Shift+u exec --no-startup-id picom --config $HOME/.config/picom.conf -b
+bindsym $mod+Shift+i exec --no-startup-id $HOME/rarch/scripts/gaming.sh 
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
