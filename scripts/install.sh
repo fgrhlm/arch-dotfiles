@@ -38,6 +38,20 @@ config_xorg () {
     [ $(ps -o user= -C Xorg) = "root" ] && echo_color $FG_RED "XORG IS ROOT!!" || echo_color $FG_GREEN "Xorg privs OK"
 }
 
+config_ff () {
+    echo_color "${BG_BLUE}${FG_GREY}" "Firefox.."
+    sudo cp -v $DIR_RARCH/firefox/autoconfig.js /usr/lib/firefox/defaults/pref/autoconfig.js
+    sudo cp -v $DIR_RARCH/firefox/config.js /usr/lib/firefox/defaults/pref/firefox.cfg
+    sudo cp -v $DIR_RARCH/firefox/policies.json /usr/lib/firefox/distribution/policies.json
+    sudo rm -fv /usr/lib/firefox/browser/features/screenshots@mozilla.org.xpi
+    sudo rm -fv /usr/lib/firefox/browser/features/formautofill@mozilla.org.xpi
+    sudo rm -fv /usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi
+    sudo rm -fv /usr/lib/firefox/crashreporter
+    sudo rm -fv /usr/lib/firefox/minidump-analyzer
+    sudo rm -fv /usr/lib/firefox/pingsender
+
+}
+
 config_systemd_units () {
     echo_color "${BG_BLUE}${FG_GREY}" "Enabling systemd units"
     sudo systemctl enable cpupower 
@@ -66,7 +80,6 @@ install_dotfiles () {
     lnk /xorg/xserverrc $HOME .xserverrc
     lnk /rofi/config.rasi $DIR_CONFIG/rofi config.rasi
     lnk /gamemode/gamemode.ini $DIR_CONFIG gamemode.ini
-    lnk /firefox/policies.json $HOME/.mozilla/firefox policies.json    
     lnk /dri/drirc $DIR_CONFIG .drirc
 }
 
@@ -83,6 +96,7 @@ main () {
     config_cpupower
     config_gamemode
     config_systemd_units
+    config_ff
     apply_tunings
     
     echo_color "${BG_GREEN}${FG_GREY}" "Config done! Exiting!"

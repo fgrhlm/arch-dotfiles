@@ -15,7 +15,7 @@ export GIT_EDITOR=nvim
 [[ $- != *i* ]] && return
 
 # aliases
-alias ls='ls -lSah --color=auto'
+alias ls='ls -lah --color=auto'
 alias duf='du -h --max-depth=1 | sort -h'
 alias tree='tree -Cha'
 alias grep='grep --color=auto'
@@ -23,8 +23,3 @@ alias vim='nvim'
 
 # prompt
 PS1='[\A] (\u@\h) \w \$ '
-
-# wal
-if [ -d "~/.cache/wal" ]; then
-    cat ~/.cache/wal/sequences
-fi

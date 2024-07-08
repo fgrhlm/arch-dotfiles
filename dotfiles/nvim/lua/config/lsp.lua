@@ -4,6 +4,9 @@ lspconfig.jedi_language_server.setup {}
 lspconfig.tsserver.setup {}
 lspconfig.gopls.setup {}
 lspconfig.clangd.setup {}
+lspconfig.hls.setup{
+    filetypes = { 'haskell', 'lhaskell', 'cabal' },
+}
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),

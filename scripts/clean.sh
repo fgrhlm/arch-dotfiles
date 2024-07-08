@@ -3,34 +3,34 @@ set -e
 
 main (){
     # Files
-    rm -f $HOME/.lesshst
-    rm -f $HOME/.viminfo
-    rm -f $HOME/.local/share/recently-used.xbel
-    rm -f $HOME/.bash_history
-    rm -f $HOME/.bash_history-*.tmp
-    rm -f $HOME/.sqlite_history
-    rm -f $HOME/.python_history
-    rm -f $HOME/.wget-hsts
-    rm -f $HOME/Downloads/*
+    rm -fv $HOME/.lesshst
+    rm -fv $HOME/.viminfo
+    rm -fv $HOME/.local/share/recently-used.xbel
+    rm -fv $HOME/.bash_history
+    rm -fv $HOME/.bash_logout
+    rm -fv $HOME/.bash_history-*.tmp
+    rm -fv $HOME/.sqlite_history
+    rm -fv $HOME/.python_history
+    rm -fv $HOME/.wget-hsts
+    rm -fv $HOME/Downloads/*
 
     # Folders
-    rm -rf $HOME/.nv
-    rm -rf $HOME/.mozilla
-    rm -rf $HOME/.local/share/Trash
-    rm -rf $HOME/.local/share/cache
-    rm -rf $HOME/.local/share/RecentDocuments
-    rm -rf $HOME/Public
-    rm -rf $HOME/.cache/*
+    rm -rfv $HOME/.nv
+    rm -rfv $HOME/.cabal
+    rm -rfv $HOME/.ipython
+    rm -rfv $HOME/.jupyter
+    rm -rfv $HOME/.mozilla
+    rm -rfv $HOME/.local/share/Trash
+    rm -rfv $HOME/.local/share/cache
+    rm -rfv $HOME/.local/share/RecentDocuments
+    rm -rfv $HOME/Public
+    rm -rfv $HOME/.cache/*
 
     # Clear pacman cache
     sudo pacman -Sc --noconfirm
 
     # Nuke logs
-    sudo rm -rf /var/log/journal
-    for CLEAN in $(find /var/log/ -type f)
-    do
-        cp /dev/null $CLEAN
-    done
+    sudo rm -rfv /var/log/journal
     
     echo "done!"
 }

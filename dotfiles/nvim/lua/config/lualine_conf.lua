@@ -1,7 +1,7 @@
 require('lualine').setup {
     options = {
         icons_enabled = true,
-        theme = 'pywal',
+        theme = 'auto',
         disabled_filetypes = {
             statusline = {},
             winbar = {},
