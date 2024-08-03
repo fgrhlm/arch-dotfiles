@@ -1,12 +1,8 @@
 configuration {
 	modi:                       "drun,run,filebrowser";
     show-icons:                 false;
-    display-drun:               "";
-    display-run:                "";
-    display-filebrowser:        "";
-    display-window:             "";
 	drun-display-format:        "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
 	window-format:              "{w} · {c} · {t}";
 }
 
-@import "~/rarch/dotfiles/rofi/rarch.rasi"
+@theme "gruvbox-dark-hard"

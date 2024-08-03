@@ -11,3 +11,7 @@ FG_AQUA="\033[38;5;14m"
 BG_GREEN="\033[48;5;2m"
 BG_RED="\033[48;5;9m"
 BG_BLUE="\033[48;5;12m"
+
+echo_color () {
+    echo -e "${F_BOLD}${1}${2}${F_RESET}"
+}
