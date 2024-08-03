@@ -15,3 +15,4 @@ xorg/xserverrc             $HOME                           .xserverrc
 rofi/config.rasi           $XDG_CONFIG_HOME/rofi           config.rasi
 gamemode/gamemode.ini      $XDG_CONFIG_HOME                gamemode.ini
 dri/drirc                  $XDG_CONFIG_HOME                .drirc
+discord/settings.json      $XDG_CONFIG_HOME/discord        settings.json
