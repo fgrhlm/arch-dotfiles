@@ -1,2 +1,3 @@
-pref("general.config.filename", "firefox.cfg");
+// autoconfig
 pref("general.config.obscure_value", 0);
+pref("general.config.filename", "firefox.cfg");
