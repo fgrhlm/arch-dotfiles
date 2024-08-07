@@ -11,6 +11,12 @@ export HISTSIZE=10000
 # git
 export GIT_EDITOR=nvim
 
+# paths
+export XDG_CONFIG_HOME="${HOME}/.config"
+export RARCH_ROOT="${HOME}/rarch"
+export RARCH_DOTFILES="${RARCH_ROOT}/dotfiles"
+export RARCH_SCRIPTS="${RARCH_ROOT}/scripts"
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 

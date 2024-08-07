@@ -22,13 +22,13 @@ if [[ -z $RARCH_SCRIPTS ]]; then
 fi
 
 source $RARCH_SCRIPTS/common/colors.sh
-source $RARCH_SCRIPTS/conf-cpupower.sh
-source $RARCH_SCRIPTS/conf-ff.sh
-source $RARCH_SCRIPTS/conf-gamemode.sh
-source $RARCH_SCRIPTS/conf-perf.sh
-source $RARCH_SCRIPTS/conf-systemd.sh
-source $RARCH_SCRIPTS/conf-xorg.sh
-source $RARCH_SCRIPTS/link-dotfiles.sh
+source $RARCH_SCRIPTS/config/conf-cpupower.sh
+source $RARCH_SCRIPTS/config/conf-ff.sh
+source $RARCH_SCRIPTS/config/conf-gamemode.sh
+source $RARCH_SCRIPTS/config/conf-perf.sh
+source $RARCH_SCRIPTS/config/conf-systemd.sh
+source $RARCH_SCRIPTS/config/conf-xorg.sh
+source $RARCH_SCRIPTS/sync/sync-dotfiles.sh
 
 main () {
     # Link dotfiles

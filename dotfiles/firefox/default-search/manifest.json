@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "default-search",
+  "version": "0.1",
+  "author": "rcd",
+  "description": "Change default search engine in non-esr firefox distributions.",
+  "browser_action": {
+    "default_title": "default-search"
+  },
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "DuckDuckGo",
+      "search_url": "https://duckduckgo.com/?q={searchTerms}",
+      "is_default": true
+    }
+  }
+}

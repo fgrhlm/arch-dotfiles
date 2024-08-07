@@ -107,7 +107,14 @@
         "uBlock0@raymondhill.net": {
             "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",
             "installation_mode": "normal_installed"
+        },
+        "default-search@local.here": {
+            "install_url": "file://$HOME/rarch/dotfiles/firefox/default-search.xpi",
+            "installation_mode": "normal_installed"
         }
+    },
+    "SearchEngines": {
+      "Default": "DuckDuckGo"
     }
   }
 }
