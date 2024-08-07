@@ -46,6 +46,8 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+Shift+u exec --no-startup-id picom --config $XDG_CONFIG_HOME/picom.conf -b
 bindsym $mod+Shift+i exec --no-startup-id $RARCH_SCRIPTS/utils/gaming.sh 
+bindsym $mod+Shift+b exec --no-startup-id redshift -x
+bindsym $mod+Shift+n exec --no-startup-id redshift -O 2700
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.

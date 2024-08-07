@@ -7,7 +7,6 @@ picom/picom.conf           $XDG_CONFIG_HOME                picom.conf
 polybar/config.ini         $XDG_CONFIG_HOME/polybar        config.ini
 polybar/mocha.ini          $XDG_CONFIG_HOME/polybar        mocha.ini
 polybar/launch.sh          $XDG_CONFIG_HOME/polybar        launch.sh
-tmux/tmux.conf             $HOME/                          .tmux.conf
 gtk3/gtkrc                 $XDG_CONFIG_HOME/gtk-3.0        settings.ini
 btop/btop.conf             $XDG_CONFIG_HOME/btop           btop.conf
 xorg/xinitrc               $HOME                           .xinitrc
