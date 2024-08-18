@@ -109,12 +109,9 @@
             "installation_mode": "normal_installed"
         },
         "default-search@local.here": {
-            "install_url": "file://$HOME/rarch/dotfiles/firefox/default-search.xpi",
+            "install_url": "file:///usr/lib/firefox-developer-edition/distribution/extensions/default-search.xpi",
             "installation_mode": "normal_installed"
         }
-    },
-    "SearchEngines": {
-      "Default": "DuckDuckGo"
     }
   }
 }

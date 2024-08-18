@@ -7,6 +7,11 @@
   "browser_action": {
     "default_title": "default-search"
   },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "default-search@local.here"
+     }
+  },
   "chrome_settings_overrides": {
     "search_provider": {
       "name": "DuckDuckGo",
