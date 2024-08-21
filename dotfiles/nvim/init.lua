@@ -76,6 +76,7 @@ cmd("au BufRead,BufWrite setlocal retab")
 
 -- Colorscheme
 vim.cmd.colorscheme "spaceduck"
+cmd("highlight Comment guifg=#F10E55")
 
 -- Tabs / indent
 opt.shiftwidth = 2 

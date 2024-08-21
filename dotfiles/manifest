@@ -3,7 +3,6 @@ bash/bash_profile          $HOME                           .bash_profile
 nvim                       $XDG_CONFIG_HOME                nvim
 alacritty/alacritty.toml   $XDG_CONFIG_HOME                alacritty.toml
 i3/config                  $XDG_CONFIG_HOME/i3             config
-picom/picom.conf           $XDG_CONFIG_HOME                picom.conf
 polybar/config.ini         $XDG_CONFIG_HOME/polybar        config.ini
 polybar/mocha.ini          $XDG_CONFIG_HOME/polybar        mocha.ini
 polybar/launch.sh          $XDG_CONFIG_HOME/polybar        launch.sh

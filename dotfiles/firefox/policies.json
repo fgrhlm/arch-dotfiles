@@ -30,7 +30,7 @@
         "Locked": true
     },
     "PDFjs": {
-        "Enabled": false
+        "Enabled": true
     },
     "PromptForDownloadLocation": true,
     "PasswordManagerEnabled": false,

@@ -1,8 +1,7 @@
 set $mod Mod4
 
 exec_always --no-startup-id $XDG_CONFIG_HOME/polybar/launch.sh
-exec --no-startup-id picom --config $XDG_CONFIG_HOME/picom.conf -b
-exec --no-startup-id feh --bg-fill ~/Downloads/bg.jpg ~/Downloads/bg2.jpg
+exec --no-startup-id feh --bg-fill ~/Documents/bg.jpg ~/Documents/bg2.jpg
 font pango:DaddyTimeMono Nerd Font Mono 8
 
 gaps inner 4px
@@ -44,7 +43,6 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
-bindsym $mod+Shift+u exec --no-startup-id picom --config $XDG_CONFIG_HOME/picom.conf -b
 bindsym $mod+Shift+i exec --no-startup-id $RARCH_SCRIPTS/utils/gaming.sh 
 bindsym $mod+Shift+b exec --no-startup-id redshift -x
 bindsym $mod+Shift+n exec --no-startup-id redshift -O 2700
