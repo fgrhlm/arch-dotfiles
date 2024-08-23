@@ -41,6 +41,7 @@ lazy.setup({
 ------------------------------------------------
 ------------------------------------------------
 
+vim.o.updatetime = 100
 g.netrw_winsize = 30
 g.netrw_banner = 0
 g.netrw_liststyle = 3
@@ -126,6 +127,32 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+-- Update diagnostics in I mode
+vim.diagnostic.config({
+  update_in_insert = true,
+})
+
+-- Diagnostics in window
+function open_diagnostic_win()
+  local opts = {
+      focusable = false,
+      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+      border = 'rounded',
+      source = 'always',
+      prefix = ' ',
+      scope = 'cursor',
+    }
+    vim.diagnostic.open_float(nil, opts)
+end
+
+vim.keymap.set({'n', 'i'}, '<C-d>', open_diagnostic_win)
+
+-- Gutter symbols
+local signs = { Error = "🕱", Warn = "🏱", Hint = "🏷", Info = "🕮 " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
 ------------------------------------------------
 ------------------------------------------------
@@ -182,8 +209,8 @@ lualine.setup {
             statusline = {},
             winbar = {},
         },
-        component_separators = {},
-        section_separators = {},
+        component_separators = { left = '', right = ''},
+        section_separators = { left = '', right = ''},
     },
     sections = {
         lualine_a = {'mode'},
@@ -215,7 +242,6 @@ treesitter.setup {
   indent = {
     enable = true,
   },
-
   ensure_installed = { "python", "javascript", "typescript", "c", "lua", "haskell" },
   sync_install = false,
   auto_install = true,
