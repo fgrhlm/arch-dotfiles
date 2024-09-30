@@ -17,6 +17,9 @@ export RARCH_ROOT="${HOME}/rarch"
 export RARCH_DOTFILES="${RARCH_ROOT}/dotfiles"
 export RARCH_SCRIPTS="${RARCH_ROOT}/scripts"
 
+# prompt
+export PS1="\[\e[30;43m\][\[\e[m\]\[\e[30;43m\]\t\[\e[m\]\[\e[30;43m\]]\[\e[m\] \[\e[30;46m\][\[\e[m\]\[\e[30;46m\]\u\[\e[m\]\[\e[30;46m\]@\[\e[m\]\[\e[30;46m\]\h\[\e[m\]\[\e[30;46m\]]\[\e[m\]\[\e[37m\] \[\e[m\]\[\e[30;45m\]\w\[\e[m\] \\$ "
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -27,5 +30,3 @@ alias tree='tree -Cha'
 alias grep='grep --color=auto'
 alias vim='nvim'
 
-# prompt
-PS1='[\A] (\u@\h) \w \$ '

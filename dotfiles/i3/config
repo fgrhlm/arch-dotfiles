@@ -4,10 +4,10 @@ exec_always --no-startup-id $XDG_CONFIG_HOME/polybar/launch.sh
 exec --no-startup-id feh --bg-fill ~/Documents/bg.jpg ~/Documents/bg2.jpg
 font pango:DaddyTimeMono Nerd Font Mono 8
 
-gaps inner 4px
-gaps outer 1px
-gaps top 20px
-gaps bottom 4px
+gaps inner 2px
+gaps outer -1px
+gaps top -1px
+gaps bottom -1px
 
 for_window [class="^.*"] border none
 default_border none
@@ -29,7 +29,7 @@ tiling_drag modifier titlebar
 
 bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+q kill
-bindcode $mod+40 exec "rofi -modi drun,run -show drun"
+bindcode $mod+40 exec --no-startup-id dmenu_run -b -nb "#000000" -nf "#ffffff" -sb "#009900" -fn 'DaddyTimeMono Nerd Font Mono-6'
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up

@@ -71,6 +71,7 @@ cmd("au Filetype html setlocal sw=2 expandtab")
 cmd("au Filetype javascript setlocal sw=2 expandtab")
 cmd("au Filetype javascriptreact setlocal sw=2 expandtab")
 cmd("au Filetype css setlocal sw=2 expandtab")
+cmd("au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab")
 
 -- Retab files on read/write
 cmd("au BufRead,BufWrite setlocal retab")
@@ -80,10 +81,10 @@ vim.cmd.colorscheme "spaceduck"
 cmd("highlight Comment guifg=#F10E55")
 
 -- Tabs / indent
-opt.shiftwidth = 2 
+opt.shiftwidth = 4 
 opt.expandtab = true
 opt.tabstop = 4
-opt.softtabstop = 2
+opt.softtabstop = 4
 opt.wrap = false
 
 -- Visual Experience TM
