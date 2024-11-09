@@ -29,4 +29,3 @@ alias duf='du -h --max-depth=1 | sort -h'
 alias tree='tree -Cha'
 alias grep='grep --color=auto'
 alias vim='nvim'
-
