@@ -105,6 +105,9 @@ opt.completeopt = "menuone,noinsert,noselect"
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local lspconfig = require('lspconfig')
 
+-- Bash
+lspconfig.bashls.setup{}
+
 -- Jedi
 lspconfig.jedi_language_server.setup {}
 
