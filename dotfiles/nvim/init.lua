@@ -9,6 +9,7 @@ local keymap = vim.api.nvim_set_keymap
 ------------------------------------------------
 ------------------------------------------------
 
+-- install lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -16,7 +17,7 @@ if not vim.loop.fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end
@@ -25,14 +26,43 @@ vim.opt.rtp:prepend(lazypath)
 
 local lazy = require('lazy')
 lazy.setup({
-    "pineapplegiant/spaceduck",
-    "preservim/tagbar",
-    "neovim/nvim-lspconfig",
-    "nvim-treesitter/nvim-treesitter",
-    "nvim-lualine/lualine.nvim",
-    "nvim-tree/nvim-web-devicons",
-    "mattn/emmet-vim",
-    {"nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" }}
+    "pineapplegiant/spaceduck",         --https://github.com/pineapplegiant/spaceduck
+    "preservim/tagbar",                 --https://github.com/preservim/tagbar
+    "neovim/nvim-lspconfig",            --https://github.com/neovim/nvim-lspconfig
+    "nvim-treesitter/nvim-treesitter",  --https://github.com/nvim-treesitter/nvim-treesitter
+    "nvim-lualine/lualine.nvim",        --https://github.com/nvim-lualine/lualine.nvim
+    "nvim-tree/nvim-web-devicons",      --https://github.com/nvim-tree/nvim-web-devicons
+    "mattn/emmet-vim",                  --https://github.com/mattn/emmet-vim
+    {
+        "nvim-telescope/telescope.nvim",--https://github.com/nvim-telescope/telescope.nvim
+        dependencies = {
+            "nvim-lua/plenary.nvim"     --https://github.com/nvim-lua/plenary.nvim
+        }
+    },
+    {
+      "scalameta/nvim-metals",          --https://github.com/scalameta/nvim-metals
+      dependencies = {
+        "nvim-lua/plenary.nvim",        --https://github.com/nvim-lua/plenary.nvim
+      },
+      ft = { "scala", "sbt", "java" },
+      opts = function()
+        local metals_config = require("metals").bare_config()
+        metals_config.on_attach = function(client, bufnr)
+        end
+
+        return metals_config
+      end,
+      config = function(self, metals_config)
+        local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+        vim.api.nvim_create_autocmd("FileType", {
+          pattern = self.ft,
+          callback = function()
+            require("metals").initialize_or_attach(metals_config)
+          end,
+          group = nvim_metals_group,
+        })
+      end
+    }
 })
 
 ------------------------------------------------
@@ -52,7 +82,7 @@ g.netrw_liststyle = 3
 ------------------------------------------------
 ------------------------------------------------
 
--- Behaviour
+---- Behaviour
 opt.hidden = true
 opt.errorbells = false
 opt.swapfile = false
@@ -66,34 +96,37 @@ opt.guicursor = "n-v-c:block,i-ci-ve:block"
 opt.hlsearch = false
 opt.incsearch = true
 
--- Filetype specific stuff
+---- Filetype specific stuff
+
+-- tab width
 cmd("au Filetype html setlocal sw=2 expandtab")
+cmd("au Filetype vue setlocal sw=2 expandtab")
 cmd("au Filetype javascript setlocal sw=2 expandtab")
 cmd("au Filetype javascriptreact setlocal sw=2 expandtab")
 cmd("au Filetype css setlocal sw=2 expandtab")
 cmd("au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab")
 
--- Retab files on read/write
+---- Retab files on read/write
 cmd("au BufRead,BufWrite setlocal retab")
 
--- Colorscheme
+---- Colorscheme
 vim.cmd.colorscheme "spaceduck"
 cmd("highlight Comment guifg=#F10E55")
 
--- Tabs / indent
+---- Tabs / indent
 opt.shiftwidth = 4 
 opt.expandtab = true
 opt.tabstop = 4
 opt.softtabstop = 4
 opt.wrap = false
 
--- Visual Experience TM
+---- Visual Experience TM
 opt.number = true
 opt.relativenumber = true
 opt.cmdheight = 1
 opt.scrolloff = 8
 
--- Completion
+---- Completion
 opt.completeopt = "menuone,noinsert,noselect"
 
 ------------------------------------------------
@@ -102,29 +135,89 @@ opt.completeopt = "menuone,noinsert,noselect"
 ------------------------------------------------
 ------------------------------------------------
 
+--[[ 
+    Pacman: 
+    
+    sudo pacman -s \
+        bash-language-server \
+        jedi-language-server \
+        typescript-language-server \
+        gopls \
+        clang \
+        haskell-language-server \
+        lua-language-server
+    
+    NPM:
+    npm install -g \
+        @angular/language-server \
+        @vue/language-server \
+        vscode-langservers-extracted \
+    
+    AUR:
+    https://aur.archlinux.org/packages/ruby-solargraph
+--]]
+
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local lspconfig = require('lspconfig')
 
--- Bash
+---- Bash
+-- pacman -S bash-language-server
 lspconfig.bashls.setup{}
 
--- Jedi
+---- Jedi
+-- pacman -S jedi-language-server
 lspconfig.jedi_language_server.setup {}
 
--- TSServer
+---- TSServer
+-- pacman -S typescript-language-server
 lspconfig.tsserver.setup {}
 
--- Gopls
+---- Gopls
+-- pacman -S gopls
 lspconfig.gopls.setup {}
 
--- Clangd
-lspconfig.clangd.setup {}
+---- Clangd
+-- pacman -S clang
+lspconfig.clangd.setup {
+    filetypes = { "c", "cpp", "cuda", "cu"}
+}
 
--- Haskell
-lspconfig.hls.setup{filetypes = { 'haskell', 'lhaskell', 'cabal' },}
+---- Angular
+-- npm install -g @angular/language-server
+lspconfig.angularls.setup{}
 
--- Lua Language Server
+---- Vue.js
+-- npm install -g @vue/language-server
+lspconfig.volar.setup{
+    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+    init_options = {
+        vue = {
+            hybridMode = false,
+        },
+    },
+}
 
+---- CSS
+-- npm i -g vscode-langservers-extracted
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+lspconfig.cssls.setup{
+    capabilities = capabilities,
+}
+
+---- Haskell
+-- pacman -S haskell-language-server
+lspconfig.hls.setup{
+    filetypes = { 'haskell', 'lhaskell', 'cabal' }
+}
+
+---- Ruby
+-- https://aur.archlinux.org/packages/ruby-solargraph
+lspconfig.solargraph.setup{}
+
+---- Lua Language Server
+-- sudo pacman -S lua-language-server
 -- Love2d
 lspconfig.lua_ls.setup {
   on_init = function(client)
@@ -168,12 +261,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- Update diagnostics in I mode
+---- Update diagnostics in I mode
 vim.diagnostic.config({
   update_in_insert = true,
 })
 
--- Diagnostics in window
+---- Diagnostics in window
 function open_diagnostic_win()
   local opts = {
       focusable = false,
@@ -188,7 +281,7 @@ end
 
 vim.keymap.set({'n', 'i'}, '<C-d>', open_diagnostic_win)
 
--- Gutter symbols
+---- Gutter symbols
 local signs = { Error = "🕱", Warn = "🏱", Hint = "🏷", Info = "🕮 " }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
@@ -207,7 +300,6 @@ local tscope = require("telescope.builtin")
 keymap("n", " ", "<Nop>", {silent = true})
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
 
 -- Set 'ö' to <Esc>
 local modes = {"i", "n", "v"}
