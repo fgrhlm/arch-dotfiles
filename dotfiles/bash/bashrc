@@ -5,7 +5,6 @@
 export LESSHISTFILE=-
 
 # history
-export HISTIGNORE="ls *:cd *"
 export HISTSIZE=10000
 
 # git
@@ -26,12 +25,21 @@ export LD_LIBRARY_PATH=${CUDA_PATH}/lib64:${LD_LIBRARY_PATH}
 # prompt
 export PS1="\[\e[30;43m\][\[\e[m\]\[\e[30;43m\]\t\[\e[m\]\[\e[30;43m\]]\[\e[m\] \[\e[30;46m\][\[\e[m\]\[\e[30;46m\]\u\[\e[m\]\[\e[30;46m\]@\[\e[m\]\[\e[30;46m\]\h\[\e[m\]\[\e[30;46m\]]\[\e[m\]\[\e[37m\] \[\e[m\]\[\e[30;45m\]\w\[\e[m\] \\$ "
 
-#npm prefix
+if (env | grep -Fq "DISTROBOX"); then
+    export PS1="(distrobox) ${PS1}"
+fi
+
+# npm prefix
 export PATH="$HOME/.local/bin:$PATH"
 export npm_config_prefix="$HOME/.local"
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+# pyenv
+if command -v pyenv 1>/dev/null 2>&1; then
+   eval "$(pyenv init - bash)"
+fi
 
 # aliases
 alias ls='ls -lah --color=auto'

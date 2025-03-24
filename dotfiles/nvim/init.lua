@@ -1,7 +1,19 @@
 local g = vim.g
 local opt = vim.opt
+local keymappings = {}
 local cmd = vim.api.nvim_command
 local keymap = vim.api.nvim_set_keymap
+
+local function map_key(mode, input, output, opts, note)
+    vim.keymap.set(mode, input, output, opts)
+    table.insert(keymappings, {
+        mode = mode,
+        input = input,
+        output = output,
+        opts = opts,
+        note = note
+    })
+end
 
 ------------------------------------------------
 ------------------------------------------------
@@ -26,6 +38,9 @@ vim.opt.rtp:prepend(lazypath)
 
 local lazy = require('lazy')
 lazy.setup({
+    "romgrk/barbar.nvim",               --https://github.com/romgrk/barbar.nvim
+    "lewis6991/gitsigns.nvim",          --https://github.com/lewis6991/gitsigns.nvim
+    "sbdchd/neoformat",                 --https://github.com/sbdchd/neoformat
     "pineapplegiant/spaceduck",         --https://github.com/pineapplegiant/spaceduck
     "preservim/tagbar",                 --https://github.com/preservim/tagbar
     "neovim/nvim-lspconfig",            --https://github.com/neovim/nvim-lspconfig
@@ -75,6 +90,7 @@ vim.o.updatetime = 100
 g.netrw_winsize = 30
 g.netrw_banner = 0
 g.netrw_liststyle = 3
+g.neoformat_try_node_exe = 1
 
 ------------------------------------------------
 ------------------------------------------------
@@ -93,28 +109,41 @@ opt.mouse:append('a')
 opt.clipboard:append("unnamedplus")
 opt.modifiable = true
 opt.guicursor = "n-v-c:block,i-ci-ve:block"
-opt.hlsearch = false
+opt.hlsearch = true
 opt.incsearch = true
 
 ---- Filetype specific stuff
+local ind_2 = {"html","dot","vue","javascript","json","javascriptreact","css","haskell"}
+local ind_4 = {"c","cpp","lua","java"}
 
--- tab width
-cmd("au Filetype html setlocal sw=2 expandtab")
-cmd("au Filetype vue setlocal sw=2 expandtab")
-cmd("au Filetype javascript setlocal sw=2 expandtab")
-cmd("au Filetype javascriptreact setlocal sw=2 expandtab")
-cmd("au Filetype css setlocal sw=2 expandtab")
-cmd("au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab")
+-- indentation
+for i=1,#ind_2,1 do
+    local _cmd = string.format("au FileType %s setlocal shiftwidth=2 softtabstop=2 expandtab", ind_2[i])
+    cmd(_cmd)
+end
 
----- Retab files on read/write
-cmd("au BufRead,BufWrite setlocal retab")
+for i=1,#ind_4,1 do
+    local _cmd = string.format("au FileType %s setlocal shiftwidth=4 softtabstop=4 expandtab", ind_4[i])
+    cmd(_cmd)
+end
+
+---- Clean up files on read/write
+local function clean_up_buf()
+    vim.cmd("retab")
+    vim.cmd [[keeppatterns %substitute/\v\s+$//eg]]
+end
+
+vim.api.nvim_create_augroup("au_clean_up", {clear = true})
+vim.api.nvim_create_autocmd("BufWritePre", {group = "au_clean_up", pattern = "*", callback = clean_up_buf})
 
 ---- Colorscheme
 vim.cmd.colorscheme "spaceduck"
+
+-- overrides
 cmd("highlight Comment guifg=#F10E55")
 
 ---- Tabs / indent
-opt.shiftwidth = 4 
+opt.shiftwidth = 4
 opt.expandtab = true
 opt.tabstop = 4
 opt.softtabstop = 4
@@ -135,9 +164,9 @@ opt.completeopt = "menuone,noinsert,noselect"
 ------------------------------------------------
 ------------------------------------------------
 
---[[ 
-    Pacman: 
-    
+--[[
+    Pacman:
+
     sudo pacman -s \
         bash-language-server \
         jedi-language-server \
@@ -146,13 +175,13 @@ opt.completeopt = "menuone,noinsert,noselect"
         clang \
         haskell-language-server \
         lua-language-server
-    
+
     NPM:
     npm install -g \
         @angular/language-server \
         @vue/language-server \
         vscode-langservers-extracted \
-    
+
     AUR:
     https://aur.archlinux.org/packages/ruby-solargraph
 --]]
@@ -170,7 +199,7 @@ lspconfig.jedi_language_server.setup {}
 
 ---- TSServer
 -- pacman -S typescript-language-server
-lspconfig.tsserver.setup {}
+-- lspconfig.tsserver.setup {}
 
 ---- Gopls
 -- pacman -S gopls
@@ -251,13 +280,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
     local bopts = { buffer = ev.buf }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bopts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bopts)
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bopts)
-    vim.keymap.set('n', '<leader>fmt', function()
-      vim.lsp.buf.format { async = true }
-    end, bopts)
+    map_key('n', 'gD', vim.lsp.buf.definition, bopts, "LSP: go to definition")
+    map_key('n', 'gd', vim.lsp.buf.declaration, bopts, "LSP: go to declaration")
+    map_key('n', 'gi', vim.lsp.buf.implementation, bopts, "LSP: go to implementation")
+    map_key('n', '<leader>rn', vim.lsp.buf.rename, bopts, "LSP: rename")
   end,
 })
 
@@ -267,7 +293,7 @@ vim.diagnostic.config({
 })
 
 ---- Diagnostics in window
-function open_diagnostic_win()
+local function open_diagnostic_win()
   local opts = {
       focusable = false,
       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
@@ -279,7 +305,7 @@ function open_diagnostic_win()
     vim.diagnostic.open_float(nil, opts)
 end
 
-vim.keymap.set({'n', 'i'}, '<C-d>', open_diagnostic_win)
+map_key({'n', 'i'}, '<C-d>', open_diagnostic_win, {}, "LSP: Open diagnostics")
 
 ---- Gutter symbols
 local signs = { Error = "🕱", Warn = "🏱", Hint = "🏷", Info = "🕮 " }
@@ -305,7 +331,7 @@ vim.g.maplocalleader = " "
 local modes = {"i", "n", "v"}
 
 for _, mode in ipairs(modes) do
-    keymap(mode, "ö", "<esc>", { noremap = true })
+    map_key(mode, "ö", "<esc>", { noremap = true }, "GENERAL: Replace <Esc> with Ö")
 end
 
 -- Disable arrow keys in normal mode
@@ -316,15 +342,41 @@ for _, key in ipairs(arrow_keys) do
 end
 
 -- NetRW
-keymap("n", "<leader>b", ":Lexplore<CR>", {})
+map_key("n", "<leader>b", ":Lexplore<CR>", {}, "NetRW: Toggle")
 
 -- TagBar
-keymap("n", "<leader>tb", ":TagbarToggle<CR>", {})
+map_key("n", "<leader>tb", ":TagbarToggle<CR>", {}, "TagBar: Toggle")
 
 -- Telescope
-vim.keymap.set("n", "<leader>ff", tscope.find_files, {})
-vim.keymap.set("n", "<leader>fg", tscope.live_grep, {})
-vim.keymap.set("n", "<leader>fb", tscope.buffers, {})
+map_key("n", "<leader>ff", tscope.find_files, {}, "Telescope: Find files")
+map_key("n", "<leader>fg", tscope.live_grep, {}, "Telescope: Live grep")
+map_key("n", "<leader>fb", tscope.buffers, {}, "Telescope: Buffers")
+
+-- Neoformat
+map_key("n", "<leader>fmt", ":Neoformat<CR>", {}, "Neoformat: do it")
+
+-- BarBar
+-- navigation
+map_key("n", "gq", ":BufferClose<CR>", { noremap = true }, "BarBar: close buffer")
+map_key("n", "gt", ":BufferNext<CR>", { noremap = true }, "BarBar: go right")
+map_key("n", "gT", ":BufferPrevious<CR>", { noremap = true }, "BarBar: go left")
+map_key("n", "<leader>gt", ":BufferMoveNext<CR>", {}, "BarBar: move right")
+map_key("n", "<leader>gT", ":BufferMovePrevious<CR>", {}, "BarBar: move left")
+map_key("n", "<leader>g0", ":BufferLast<CR>", {}, "BarBar: go to last")
+map_key("n", "<leader>gr", ":BufferRestore<CR>", {}, "BarBar: restore")
+map_key("n", "<leader>gg", ":BufferPick<CR>", {}, "BarBar: magic pick")
+map_key("n", "<leader>gacq", ":BufferCloseAllButCurrent<CR>", {}, "BarBar: close all but current")
+
+for i=1,9,1 do
+    map_key("n", string.format("g%d",i), string.format(":BufferGoto %d<CR>", i), {}, string.format("BarBar: go to %d", i))
+end
+
+-- sort
+map_key("n", "<leader>god", ":BufferOrderByDirectory<CR>", {}, "BarBar: sort by dir")
+map_key("n", "<leader>gon", ":BufferOrderByName<CR>", {}, "BarBar: sort by name")
+map_key("n", "<leader>gob", ":BufferOrderByBufferNumber<CR>", {}, "BarBar: sort by buffer num")
+map_key("n", "<leader>gol", ":BufferOrderByLanguage<CR>", {}, "BarBar: sort by language")
+map_key("n", "<leader>gow", ":BufferOrderByWindowNumber<CR>", {}, "BarBar: sort by window num")
 
 ------------------------------------------------
 ------------------------------------------------
@@ -383,3 +435,18 @@ treesitter.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+------------------------------------------------
+------------------------------------------------
+------------------ BarBar
+------------------------------------------------
+------------------------------------------------
+local barbar = require("barbar")
+
+barbar.setup {
+    animation = false,
+    tabpages = false,
+    hide = { extensions = true },
+    auto_hide = 1
+}
+

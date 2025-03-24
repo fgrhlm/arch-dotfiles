@@ -1,7 +1,7 @@
 set $mod Mod4
 
 exec_always --no-startup-id $XDG_CONFIG_HOME/polybar/launch.sh
-exec --no-startup-id feh --bg-fill ~/Documents/bg.jpg ~/Documents/bg2.jpg
+exec --no-startup-id feh --bg-fill ~/Documents/bg.jpg ~/Documents/bg.jpg
 font pango:DaddyTimeMono Nerd Font Mono 8
 
 gaps inner 2px
