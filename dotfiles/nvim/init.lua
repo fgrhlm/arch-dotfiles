@@ -38,10 +38,15 @@ vim.opt.rtp:prepend(lazypath)
 
 local lazy = require('lazy')
 lazy.setup({
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        opts = {}
+    },                                  --https://https://github.com/lukas-reineke/indent-blankline.nvim
     "romgrk/barbar.nvim",               --https://github.com/romgrk/barbar.nvim
     "lewis6991/gitsigns.nvim",          --https://github.com/lewis6991/gitsigns.nvim
     "sbdchd/neoformat",                 --https://github.com/sbdchd/neoformat
-    "pineapplegiant/spaceduck",         --https://github.com/pineapplegiant/spaceduck
+    "rebelot/kanagawa.nvim",            --https://github.com/rebelot/kanagawa.nvim
     "preservim/tagbar",                 --https://github.com/preservim/tagbar
     "neovim/nvim-lspconfig",            --https://github.com/neovim/nvim-lspconfig
     "nvim-treesitter/nvim-treesitter",  --https://github.com/nvim-treesitter/nvim-treesitter
@@ -137,10 +142,23 @@ vim.api.nvim_create_augroup("au_clean_up", {clear = true})
 vim.api.nvim_create_autocmd("BufWritePre", {group = "au_clean_up", pattern = "*", callback = clean_up_buf})
 
 ---- Colorscheme
-vim.cmd.colorscheme "spaceduck"
+local kanagawa = require("kanagawa").setup {
+    transparent = true,
+    theme = "dragon",
+    colors = {
+    theme = {
+        all = {
+            ui = {
+                bg_gutter = "none"
+            }
+        }
+    }
+}
+}
 
--- overrides
-cmd("highlight Comment guifg=#F10E55")
+vim.cmd.colorscheme "kanagawa"
+
+cmd("highlight Comment guifg=#ff5d62")
 
 ---- Tabs / indent
 opt.shiftwidth = 4
@@ -307,13 +325,6 @@ end
 
 map_key({'n', 'i'}, '<C-d>', open_diagnostic_win, {}, "LSP: Open diagnostics")
 
----- Gutter symbols
-local signs = { Error = "🕱", Warn = "🏱", Hint = "🏷", Info = "🕮 " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
 ------------------------------------------------
 ------------------------------------------------
 ------------------ Keybindings
@@ -389,7 +400,7 @@ local lualine = require('lualine')
 lualine.setup {
     options = {
         icons_enabled = true,
-        theme = 'spaceduck',
+        theme = 'kanagawa',
         disabled_filetypes = {
             statusline = {},
             winbar = {},
@@ -450,3 +461,38 @@ barbar.setup {
     auto_hide = 1
 }
 
+------------------------------------------------
+------------------------------------------------
+------------------ Indent-Blankline
+------------------------------------------------
+------------------------------------------------
+local ibl = require("ibl")
+local hooks = require "ibl.hooks"
+
+local highlight = {
+    "RainbowRed",
+    "RainbowYellow",
+    "RainbowBlue",
+    "RainbowOrange",
+    "RainbowGreen",
+    "RainbowViolet",
+    "RainbowCyan",
+}
+
+hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+    vim.api.nvim_set_hl(0, "RainbowRed",    { fg = "#892f31" })
+    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#7c6944" })
+    vim.api.nvim_set_hl(0, "RainbowBlue",   { fg = "#415174" })
+    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#895634" })
+    vim.api.nvim_set_hl(0, "RainbowGreen",  { fg = "#506538" })
+    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#714150" })
+    vim.api.nvim_set_hl(0, "RainbowCyan",   { fg = "#42606d" })
+end)
+
+ibl.setup {
+    indent = { highlight = highlight },
+    whitespace = {
+        highlight = highlight,
+        remove_blankline_trail = false
+    }
+}
