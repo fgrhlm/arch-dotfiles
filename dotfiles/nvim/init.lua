@@ -42,14 +42,27 @@ lazy.setup({
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
         opts = {}
-    },                                  --https://https://github.com/lukas-reineke/indent-blankline.nvim
+    },                                  --https://github.com/lukas-reineke/indent-blankline.nvim
     "romgrk/barbar.nvim",               --https://github.com/romgrk/barbar.nvim
     "lewis6991/gitsigns.nvim",          --https://github.com/lewis6991/gitsigns.nvim
     "sbdchd/neoformat",                 --https://github.com/sbdchd/neoformat
     "rebelot/kanagawa.nvim",            --https://github.com/rebelot/kanagawa.nvim
     "preservim/tagbar",                 --https://github.com/preservim/tagbar
     "neovim/nvim-lspconfig",            --https://github.com/neovim/nvim-lspconfig
-    "nvim-treesitter/nvim-treesitter",  --https://github.com/nvim-treesitter/nvim-treesitter
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        config = function ()
+          local configs = require("nvim-treesitter.configs")
+
+          configs.setup({
+              ensure_installed = { "c", "lua", "vim", "vimdoc", "javascript", "html" },
+              sync_install = false,
+              highlight = { enable = true },
+              indent = { enable = true },
+            })
+        end
+     },                                 --https://github.com/nvim-treesitter/nvim-treesitter
     "nvim-lualine/lualine.nvim",        --https://github.com/nvim-lualine/lualine.nvim
     "nvim-tree/nvim-web-devicons",      --https://github.com/nvim-tree/nvim-web-devicons
     "mattn/emmet-vim",                  --https://github.com/mattn/emmet-vim
@@ -175,6 +188,9 @@ opt.scrolloff = 8
 
 ---- Completion
 opt.completeopt = "menuone,noinsert,noselect"
+
+-- Clipboard
+opt.clipboard = "unnamedplus"
 
 ------------------------------------------------
 ------------------------------------------------
