@@ -19,7 +19,7 @@ main (){
     rm -rfv $HOME/.cabal
     rm -rfv $HOME/.ipython
     rm -rfv $HOME/.jupyter
-    rm -rfv $HOME/.mozilla
+    #rm -rfv $HOME/.mozilla
     rm -rfv $HOME/.local/share/Trash
     rm -rfv $HOME/.local/share/cache
     rm -rfv $HOME/.local/share/RecentDocuments
@@ -31,7 +31,7 @@ main (){
 
     # Nuke logs
     sudo rm -rfv /var/log/journal
-    
+
     echo "done!"
 }
 

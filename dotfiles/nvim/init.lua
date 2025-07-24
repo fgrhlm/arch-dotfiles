@@ -131,7 +131,14 @@ opt.hlsearch = true
 opt.incsearch = true
 
 ---- Filetype specific stuff
-local ind_2 = {"html","dot","vue","javascript","json","javascriptreact","css","haskell"}
+local ind_2 = {
+    "html","dot","vue",
+    "javascript","json",
+    "javascriptreact","css",
+    "haskell","jsx","ts",
+    "tsx","typescript",
+    "typescriptreact"
+}
 local ind_4 = {"c","cpp","lua","java"}
 
 -- indentation
@@ -476,6 +483,16 @@ barbar.setup {
     hide = { extensions = true },
     auto_hide = 1
 }
+
+-- preserve normal buffer/window close behaviour
+vim.api.nvim_create_autocmd("WinClosed", {
+    callback = function(tbl)
+        if vim.api.nvim_buf_is_valid(tbl.buf) then
+            vim.api.nvim_buf_delete(tbl.buf, {})
+        end
+    end,
+    group = vim.api.nvim_create_augroup("barbar_close_buf", {}),
+})
 
 ------------------------------------------------
 ------------------------------------------------

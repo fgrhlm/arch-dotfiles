@@ -16,8 +16,8 @@ default_floating_border none
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status && ~/rarch/dotfiles/dunst/audio.sh
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status && ~/rarch/dotfiles/dunst/audio.sh
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
@@ -43,9 +43,9 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
-bindsym $mod+Shift+i exec --no-startup-id $RARCH_SCRIPTS/utils/gaming.sh 
-bindsym $mod+Shift+b exec --no-startup-id redshift -x
-bindsym $mod+Shift+n exec --no-startup-id redshift -O 2700
+bindsym $mod+Shift+i exec --no-startup-id $RARCH_SCRIPTS/utils/gaming.sh
+bindsym $mod+Shift+b exec --no-startup-id redshift -x && ~/rarch/dotfiles/dunst/redshift.sh off
+bindsym $mod+Shift+n exec --no-startup-id redshift -O 2700 && ~/rarch/dotfiles/dunst/redshift.sh on
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
