@@ -1,7 +1,6 @@
 #!/bin/bash
 
 config_ff () {
-    echo_color "${BG_BLUE}${FG_GREY}" "[${FUNCNAME}].."
     sudo cp -v $RARCH_DOTFILES/firefox/autoconfig.js /usr/lib/firefox-developer-edition/defaults/pref/autoconfig.js
     sudo cp -v $RARCH_DOTFILES/firefox/config.js /usr/lib/firefox-developer-edition/firefox.cfg
     sudo cp -v $RARCH_DOTFILES/firefox/policies.json /usr/lib/firefox-developer-edition/distribution/policies.json
@@ -13,5 +12,4 @@ config_ff () {
     sudo rm -fv /usr/lib/firefox-developer-edition/crashreporter
     sudo rm -fv /usr/lib/firefox-developer-edition/minidump-analyzer
     sudo rm -fv /usr/lib/firefox-developer-edition/pingsender
-    echo_color "${BG_GREEN}${FG_GREY}" "[${FUNCNAME}] DONE!"
 }

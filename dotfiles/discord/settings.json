@@ -10,5 +10,6 @@
     "height": 940
   },
   "BACKGROUND_COLOR": "#2c2d32",
-  "debugLogging": false
+  "debugLogging": false,
+  "offloadAdmControls": false
 }

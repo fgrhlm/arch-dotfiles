@@ -29,7 +29,7 @@ tiling_drag modifier titlebar
 
 bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+q kill
-bindcode $mod+40 exec --no-startup-id dmenu_run -b -nb "#000000" -nf "#ffffff" -sb "#009900" -fn 'DaddyTimeMono Nerd Font Mono-6'
+bindcode $mod+40 exec --no-startup-id dmenu_run -b -nb "#000000" -nf "#ffffff" -sb "#009900" -fn 'DaddyTimeMono Nerd Font Mono-10'
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
