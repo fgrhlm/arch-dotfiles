@@ -240,7 +240,7 @@ lspconfig.jedi_language_server.setup {}
 
 ---- TSServer
 -- pacman -S typescript-language-server
--- lspconfig.tsserver.setup {}
+lspconfig.ts_ls.setup {}
 
 ---- Gopls
 -- pacman -S gopls
@@ -259,7 +259,7 @@ lspconfig.angularls.setup{}
 ---- Vue.js
 -- npm install -g @vue/language-server
 lspconfig.volar.setup{
-    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+    filetypes = { 'vue' },
     init_options = {
         vue = {
             hybridMode = false,
