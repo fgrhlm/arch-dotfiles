@@ -43,7 +43,6 @@ lazy.setup({
         main = "ibl",
         opts = {}
     },                                  --https://github.com/lukas-reineke/indent-blankline.nvim
-    "romgrk/barbar.nvim",               --https://github.com/romgrk/barbar.nvim
     "lewis6991/gitsigns.nvim",          --https://github.com/lewis6991/gitsigns.nvim
     "sbdchd/neoformat",                 --https://github.com/sbdchd/neoformat
     "rebelot/kanagawa.nvim",            --https://github.com/rebelot/kanagawa.nvim
@@ -66,36 +65,6 @@ lazy.setup({
     "nvim-lualine/lualine.nvim",        --https://github.com/nvim-lualine/lualine.nvim
     "nvim-tree/nvim-web-devicons",      --https://github.com/nvim-tree/nvim-web-devicons
     "mattn/emmet-vim",                  --https://github.com/mattn/emmet-vim
-    {
-        "nvim-telescope/telescope.nvim",--https://github.com/nvim-telescope/telescope.nvim
-        dependencies = {
-            "nvim-lua/plenary.nvim"     --https://github.com/nvim-lua/plenary.nvim
-        }
-    },
-    {
-      "scalameta/nvim-metals",          --https://github.com/scalameta/nvim-metals
-      dependencies = {
-        "nvim-lua/plenary.nvim",        --https://github.com/nvim-lua/plenary.nvim
-      },
-      ft = { "scala", "sbt", "java" },
-      opts = function()
-        local metals_config = require("metals").bare_config()
-        metals_config.on_attach = function(client, bufnr)
-        end
-
-        return metals_config
-      end,
-      config = function(self, metals_config)
-        local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-        vim.api.nvim_create_autocmd("FileType", {
-          pattern = self.ft,
-          callback = function()
-            require("metals").initialize_or_attach(metals_config)
-          end,
-          group = nvim_metals_group,
-        })
-      end
-    }
 })
 
 ------------------------------------------------
@@ -381,37 +350,8 @@ map_key("n", "<leader>b", ":Lexplore<CR>", {}, "NetRW: Toggle")
 -- TagBar
 map_key("n", "<leader>tb", ":TagbarToggle<CR>", {}, "TagBar: Toggle")
 
--- Telescope
-map_key("n", "<leader>ff", tscope.find_files, {}, "Telescope: Find files")
-map_key("n", "<leader>fg", tscope.live_grep, {}, "Telescope: Live grep")
-map_key("n", "<leader>fb", tscope.buffers, {}, "Telescope: Buffers")
-
 -- Neoformat
 map_key("n", "<leader>fmt", ":Neoformat<CR>", {}, "Neoformat: do it")
-
--- BarBar
--- navigation
-map_key("n", "gq", ":BufferClose<CR>", { noremap = true }, "BarBar: close buffer")
-map_key("n", "gt", ":BufferNext<CR>", { noremap = true }, "BarBar: go right")
-map_key("n", "gT", ":BufferPrevious<CR>", { noremap = true }, "BarBar: go left")
-map_key("n", "<leader>gt", ":BufferMoveNext<CR>", {}, "BarBar: move right")
-map_key("n", "<leader>gT", ":BufferMovePrevious<CR>", {}, "BarBar: move left")
-map_key("n", "<leader>g0", ":BufferLast<CR>", {}, "BarBar: go to last")
-map_key("n", "<leader>gr", ":BufferRestore<CR>", {}, "BarBar: restore")
-map_key("n", "<leader>gg", ":BufferPick<CR>", {}, "BarBar: magic pick")
-map_key("n", "<leader>gacq", ":BufferCloseAllButCurrent<CR>", {}, "BarBar: close all but current")
-
-for i=1,9,1 do
-    map_key("n", string.format("g%d",i), string.format(":BufferGoto %d<CR>", i), {}, string.format("BarBar: go to %d", i))
-end
-
--- sort
-map_key("n", "<leader>god", ":BufferOrderByDirectory<CR>", {}, "BarBar: sort by dir")
-map_key("n", "<leader>gon", ":BufferOrderByName<CR>", {}, "BarBar: sort by name")
-map_key("n", "<leader>gob", ":BufferOrderByBufferNumber<CR>", {}, "BarBar: sort by buffer num")
-map_key("n", "<leader>gol", ":BufferOrderByLanguage<CR>", {}, "BarBar: sort by language")
-map_key("n", "<leader>gow", ":BufferOrderByWindowNumber<CR>", {}, "BarBar: sort by window num")
-
 ------------------------------------------------
 ------------------------------------------------
 ------------------ Lualine
