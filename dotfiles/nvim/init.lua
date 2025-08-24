@@ -43,11 +43,19 @@ lazy.setup({
         main = "ibl",
         opts = {}
     },                                  --https://github.com/lukas-reineke/indent-blankline.nvim
-    "lewis6991/gitsigns.nvim",          --https://github.com/lewis6991/gitsigns.nvim
     "sbdchd/neoformat",                 --https://github.com/sbdchd/neoformat
-    "rebelot/kanagawa.nvim",            --https://github.com/rebelot/kanagawa.nvim
-    "preservim/tagbar",                 --https://github.com/preservim/tagbar
     "neovim/nvim-lspconfig",            --https://github.com/neovim/nvim-lspconfig
+    {
+        'sainnhe/gruvbox-material',
+        lazy = false,
+        priority = 1000,
+
+        config = function()
+            vim.g.gruvbox_material_enable_italic = true
+            vim.g.gruvbox_material_background = "hard"
+            vim.cmd.colorscheme('gruvbox-material')
+        end
+    },
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
@@ -63,7 +71,6 @@ lazy.setup({
         end
      },                                 --https://github.com/nvim-treesitter/nvim-treesitter
     "nvim-lualine/lualine.nvim",        --https://github.com/nvim-lualine/lualine.nvim
-    "nvim-tree/nvim-web-devicons",      --https://github.com/nvim-tree/nvim-web-devicons
     "mattn/emmet-vim",                  --https://github.com/mattn/emmet-vim
 })
 
@@ -131,21 +138,7 @@ vim.api.nvim_create_augroup("au_clean_up", {clear = true})
 vim.api.nvim_create_autocmd("BufWritePre", {group = "au_clean_up", pattern = "*", callback = clean_up_buf})
 
 ---- Colorscheme
-local kanagawa = require("kanagawa").setup {
-    transparent = true,
-    theme = "dragon",
-    colors = {
-    theme = {
-        all = {
-            ui = {
-                bg_gutter = "none"
-            }
-        }
-    }
-}
-}
-
-vim.cmd.colorscheme "kanagawa"
+vim.cmd.colorscheme "gruvbox-material"
 
 cmd("highlight Comment guifg=#ff5d62")
 
@@ -179,7 +172,7 @@ opt.clipboard = "unnamedplus"
 
     sudo pacman -s \
         bash-language-server \
-        jedi-language-server \
+        pyright \
         typescript-language-server \
         gopls \
         clang \
@@ -323,8 +316,6 @@ map_key({'n', 'i'}, '<C-d>', open_diagnostic_win, {}, "LSP: Open diagnostics")
 ------------------------------------------------
 ------------------------------------------------
 
-local tscope = require("telescope.builtin")
-
 -- Leader
 keymap("n", " ", "<Nop>", {silent = true})
 vim.g.mapleader = " "
@@ -347,9 +338,6 @@ end
 -- NetRW
 map_key("n", "<leader>b", ":Lexplore<CR>", {}, "NetRW: Toggle")
 
--- TagBar
-map_key("n", "<leader>tb", ":TagbarToggle<CR>", {}, "TagBar: Toggle")
-
 -- Neoformat
 map_key("n", "<leader>fmt", ":Neoformat<CR>", {}, "Neoformat: do it")
 ------------------------------------------------
@@ -363,7 +351,7 @@ local lualine = require('lualine')
 lualine.setup {
     options = {
         icons_enabled = true,
-        theme = 'kanagawa',
+        theme = 'gruvbox-material',
         disabled_filetypes = {
             statusline = {},
             winbar = {},
@@ -409,30 +397,6 @@ treesitter.setup {
     additional_vim_regex_highlighting = false,
   },
 }
-
-------------------------------------------------
-------------------------------------------------
------------------- BarBar
-------------------------------------------------
-------------------------------------------------
-local barbar = require("barbar")
-
-barbar.setup {
-    animation = false,
-    tabpages = false,
-    hide = { extensions = true },
-    auto_hide = 1
-}
-
--- preserve normal buffer/window close behaviour
-vim.api.nvim_create_autocmd("WinClosed", {
-    callback = function(tbl)
-        if vim.api.nvim_buf_is_valid(tbl.buf) then
-            vim.api.nvim_buf_delete(tbl.buf, {})
-        end
-    end,
-    group = vim.api.nvim_create_augroup("barbar_close_buf", {}),
-})
 
 ------------------------------------------------
 ------------------------------------------------
