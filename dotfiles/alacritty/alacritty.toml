@@ -1,5 +1,5 @@
 general.import = [
-  "~/rarch/dotfiles/alacritty/mocha.toml"
+  "~/rarch/dotfiles/alacritty/gruvbox.toml"
 ]
 
 [window]
