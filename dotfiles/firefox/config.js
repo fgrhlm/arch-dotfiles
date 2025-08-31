@@ -4,16 +4,27 @@ lockPref("RARCH_CONFIG_START", "YES!");
 // Compat
 lockPref("browser.policies.enabled", true);
 
+// AI Crap
+lockPref("browser.ml.enable", false);
+lockPref("browser.ml.linkPreview.enabled", false);
+lockPref("browser.tabs.groups.smart.enabled", false);
+lockPref("browser.ml.chat.enabled", false);
+lockPref("browser.ml.chat.menu", false);
+lockPref("browser.ml.chat.page", false);
+lockPref("browser.ml.chat.shortcuts", false);
+lockPref("browser.ml.chat.sidebar", false);
+lockPref("browser.ml.linkPreview.option", false);
+
 // UI
 lockPref("apz.overscroll.enabled", true);
 lockPref("browser.aboutConfig.showWarning", false);
 lockPref("browser.chrome.toolbar_tips", false);
 lockPref("browser.compactmode.show", true);
-lockPref("browser.display.focus_ring_on_anything", true); 
+lockPref("browser.display.focus_ring_on_anything", true);
 lockPref("browser.display.focus_ring_style", 0);
 lockPref("browser.display.focus_ring_width", 0);
 lockPref("browser.download.always_ask_before_handling_new_types", true);
-lockPref("browser.download.autohideButton", true); 
+lockPref("browser.download.autohideButton", true);
 lockPref("browser.download.manager.addToRecentDocs", false);
 lockPref("browser.download.open_pdf_attachments_inline", true);
 lockPref("browser.download.useDownloadDir", false);
@@ -42,7 +53,7 @@ lockPref("browser.uidensity", 1);
 lockPref("browser.urlbar.autoFill", false);
 lockPref("browser.urlbar.autoFill.adaptiveHistory.enabled", false);
 lockPref("browser.urlbar.maxRichResults", 3);
-lockPref("browser.urlbar.openintab", true); 
+lockPref("browser.urlbar.openintab", true);
 lockPref("dom.disable_window_move_resize", true);
 lockPref("dom.text_fragments.enabled", true);
 lockPref("extensions.pocket.enabled", false);
@@ -95,7 +106,7 @@ lockPref("security.insecure_connection_text.pbmode.enabled", true);
 lockPref("browser.search.suggest.enabled", false);
 lockPref("browser.urlbar.suggest.searches", false);
 lockPref("browser.urlbar.quicksuggest.enabled", false);
-lockPref("browser.urlbar.suggest.quicksuggest.sponsored", false); 
+lockPref("browser.urlbar.suggest.quicksuggest.sponsored", false);
 lockPref("browser.urlbar.suggest.quicksuggest.nonsponsored", false);
 lockPref("browser.urlbar.groupLabels.enabled", false);
 lockPref("browser.formfill.enable", false);
